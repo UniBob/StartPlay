@@ -1,31 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class FightSceneManager : MonoBehaviour
 {
-    [Header("UIPrefabs")]
-    [SerializeField] GameObject goldUIElementPrefab;
-    [SerializeField] Vector2 goldUIElementCoordinates;
-    [SerializeField] GameObject healthBarPrefab;
-    [SerializeField] Vector2 healthBarCoordinates;
-
-    [Header("EnemyesPrefabs")]
-    [SerializeField] GameObject[] Enemyes;
+    [Header("EnemyiesPrefabs")]
+    [SerializeField] GameObject[] enemies;
 
     [Header("Stages")]
-    [SerializeField] GameObject[] stages;
+    [SerializeField] StageScriptableObject[] stages;
+
+    [Header("Spawn Areas")]
+    [SerializeField] private AreaListner[] areas;
 
     [Header("Else")]
     [SerializeField] private int gardenSceneTag = 1;
     [SerializeField] int multiplierPerLevel = 32;
 
     [SerializeField] private int stage;
-    [SerializeField] private int enemyesOnStage;
+    [SerializeField] private int[] enemiesOnStage;
+
+    int enemiesOnScene = 0;
+    int enemiesIterator = 0;
+    int spawnTimer = 2;
+    float previousSpawnTime;
 
     private void Start()
+    {
+        StartingSyncronize();
+        AddEnemiesOnStage();
+    }
+
+    private void Update()
+    {
+     if (Time.deltaTime > previousSpawnTime+spawnTimer)
+        {
+            previousSpawnTime = Time.deltaTime;
+            AddEnemiesOnStage();
+        }
+    }
+    private void StartingSyncronize()
     {
         if (PlayerPrefs.HasKey(PrefsKeys.stage))
         {
@@ -36,62 +53,37 @@ public class FightSceneManager : MonoBehaviour
             stage = 1;
             PlayerPrefs.SetInt(PrefsKeys.stage, stage);
         }
-
-        if (PlayerPrefs.HasKey(PrefsKeys.enemyesOnStage))
-        {
-            enemyesOnStage = PlayerPrefs.GetInt(PrefsKeys.enemyesOnStage);
-        }
-        else
-        {
-            enemyesOnStage = 1;
-            PlayerPrefs.SetInt(PrefsKeys.enemyesOnStage, enemyesOnStage);
-        }
-        AddEnemyesOnStage();
+        enemiesOnStage = stages[stage].enemiesCount;
     }
 
-    private void AddEnemyesOnStage()
+    private void AddEnemiesOnStage()
     {
-        int tmpmultiplierPerLevel = multiplierPerLevel * multiplierPerLevel * multiplierPerLevel * multiplierPerLevel;
-        int enemyCount = enemyesOnStage;
-        while (enemyCount> tmpmultiplierPerLevel)
+        foreach (var item in areas)
         {
-            Instantiate(Enemyes[3], GetRandomCoordinatesForEnemy(), Quaternion.identity);
-            enemyCount -= tmpmultiplierPerLevel;
-        }
-        tmpmultiplierPerLevel = (int)(tmpmultiplierPerLevel/multiplierPerLevel);
-        while (enemyCount > 1024)
-        {
-            Instantiate(Enemyes[2], GetRandomCoordinatesForEnemy(), Quaternion.identity);
-            enemyCount -= 1024;
-        }
-        tmpmultiplierPerLevel = (int)(tmpmultiplierPerLevel / multiplierPerLevel);
-        while (enemyCount > 32)
-        {
-            Instantiate(Enemyes[1], GetRandomCoordinatesForEnemy(), Quaternion.identity);
-            enemyCount -= 32;
-        }
-        tmpmultiplierPerLevel = (int)(tmpmultiplierPerLevel / multiplierPerLevel);
-        while (enemyCount > 1)
-        {
-            Instantiate(Enemyes[0], GetRandomCoordinatesForEnemy(), Quaternion.identity);
-            enemyCount -= 1;
+            if (item.GetIsEmpty())
+            {
+                // Преобразуем точку в координаты вьюпорта
+                Vector3 viewportPoint = Camera.main.WorldToViewportPoint(item.transform.position);
+
+                // Проверяем, находится ли точка в пределах видимости камеры
+                if (!(viewportPoint.z > 0 && viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1))
+                {
+                    if (enemiesOnStage[enemiesIterator] > 0)
+                    {
+                        enemiesOnStage[enemiesIterator]--;
+                        enemiesOnScene++;
+                        GameObject instance = Instantiate(enemies[enemiesIterator], item.transform.position, Quaternion.identity);
+                    }
+                }
+
+            }
         }
     }
 
-    private Vector2 GetRandomCoordinatesForEnemy()
-    {
-        return new Vector2(0,0);
-    }
-    // 
     public void EnemyDeath(int tag)
     {
-        int tmp = 1;
-        for (int i = tag; i > 0; i--) 
-        {
-            tmp *= multiplierPerLevel;
-        }
-        enemyesOnStage -= tmp;
-        if (enemyesOnStage <= 0)
+        enemiesOnScene--;
+        if (enemiesOnScene <1)
         {
             Win();
         }
@@ -101,9 +93,6 @@ public class FightSceneManager : MonoBehaviour
     {
 
         stage++;
-        enemyesOnStage = PlayerPrefs.GetInt(PrefsKeys.enemyesOnStage);
-        enemyesOnStage += stage * 4;
-        PlayerPrefs.SetInt(PrefsKeys.enemyesOnStage, enemyesOnStage);
         PlayerPrefs.SetInt(PrefsKeys.stage, stage);
         SceneManager.LoadScene(gardenSceneTag);
     }
