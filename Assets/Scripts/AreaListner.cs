@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class AreaListner : MonoBehaviour
 {
-    bool isEmpty = false;
+    bool isEmpty = true;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -15,7 +15,7 @@ public class AreaListner : MonoBehaviour
     {
         isEmpty = true;
     }
-
+    
     public bool GetIsEmpty()
     {
         return isEmpty;
