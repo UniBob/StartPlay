@@ -6,12 +6,14 @@ public class InventoryManager : MonoBehaviour
 {
     [SerializeField] Transform inventoryGrid;
     [SerializeField] GameObject inventoryUIPanel;
+    PlantsKeeper plantsKeeper;
     public List<InventorySlot> slots = new List<InventorySlot>();
     bool isOpen = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        plantsKeeper = FindObjectOfType<PlantsKeeper>();
         Player.Save += SaveInventorySlots;
         inventoryUIPanel.SetActive(false);
 
@@ -20,7 +22,9 @@ public class InventoryManager : MonoBehaviour
             InventorySlot inventorySlot = inventoryGrid.GetChild(i).GetComponent<InventorySlot>();
             if (inventorySlot != null)
             {
+                inventorySlot.itemId = 60000;
                 slots.Add(inventorySlot);
+
             }
         }
     }
@@ -35,11 +39,11 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void AddItem(ObjectTemplate _item, int _amount)
+    public void AddItem(int _item, int _amount)
     {
         foreach (InventorySlot slot in slots)
         {
-            if (slot.item == _item)
+            if (slot.itemId == _item)
             {
                 slot.amount += _amount;
                 slot.itemAmount.text = slot.amount.ToString();
@@ -49,12 +53,12 @@ public class InventoryManager : MonoBehaviour
         Debug.Log("set1");
         foreach (InventorySlot slot in slots)
         {
-            
+
             if (slot.isEmpty)
             {
-                slot.item = _item;
+                slot.itemId = _item;
                 slot.amount = _amount;
-                slot.SetIcon(((PlantTemplate)_item).fruitSprite); 
+                slot.SetIcon(plantsKeeper.allPlants[_item].fruitSprite);
                 slot.itemAmount.text = _amount.ToString();
                 slot.isEmpty = false;
                 return;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    public ObjectTemplate item;
+    public int itemId;
     public int amount;
 
     void OnTriggerEnter2D(Collider2D other)
@@ -10,7 +10,7 @@ public class Item : MonoBehaviour
         if (other.GetComponent<Player>() != null)
         {
             Debug.Log("OnTriggerEnter2D");
-            FindObjectOfType<InventoryManager>().AddItem(item, amount);
+            FindObjectOfType<InventoryManager>().AddItem(itemId, amount);
             Destroy(gameObject);
         }
     }
