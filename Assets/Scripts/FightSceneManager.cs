@@ -56,6 +56,7 @@ public class FightSceneManager : MonoBehaviour
         for(int i = 0;i<enemiesOnStage.Length;i++)
         {
             enemiesOnStage[i] = stages[stage].enemiesCount[i];
+            enemiesOnScene += enemiesOnStage[i];
         }
     }
 
@@ -72,10 +73,13 @@ public class FightSceneManager : MonoBehaviour
                     if (enemiesOnStage[enemiesIterator] > 0)
                     {
                         enemiesOnStage[enemiesIterator]--;
-                        enemiesOnScene++;
                         GameObject instance = Instantiate(enemies[enemiesIterator], item.transform.position, Quaternion.identity);
                         slider.maxValue += 1;
                         slider.value += 1;
+                    }
+                    else
+                    {
+                        if (enemiesIterator<enemiesOnStage.Length) enemiesIterator++;
                     }
                 }
 

@@ -191,12 +191,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3789723410a46ec4c97a6e94f3f379e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 70
   searchRadius: 100
   atackRadius: 1
-  speed: 1
-  timeThatBodyExistsAfterDeath: 0
-  timeOfDeath: 0
+  speed: 2
+  timeThatBodyExistsAfterDeath: 2
+  timeOfDeath: 2
   enemyTag: 1
   atackDamage: 3
   atackRate: 1

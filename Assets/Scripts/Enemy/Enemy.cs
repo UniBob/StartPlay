@@ -12,7 +12,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float atackRadius;
     [SerializeField] private float speed;
     [SerializeField] private float timeThatBodyExistsAfterDeath;
-    [SerializeField] private float timeOfDeath;
     [SerializeField] private int enemyTag;
 
 
@@ -23,11 +22,13 @@ public class Enemy : MonoBehaviour
     Rigidbody2D rb;
     Animator anim;
     Player player;
+    SpriteRenderer sprite;
+    public AIPath aiPath;
     [SerializeField] private bool isPlayerSeen = false;
+
     bool isAlive;
     float nextAtackTime;
-    public AIPath aiPath;
-    SpriteRenderer sprite;
+    private float timeOfDeath;
 
     private void Start()
     {
