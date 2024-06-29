@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class FightSceneManager : MonoBehaviour
 {
@@ -12,27 +13,29 @@ public class FightSceneManager : MonoBehaviour
     [Header("Spawn Areas")]
     [SerializeField] private AreaListner[] areas;
 
-    [Header("Else")]
-    [SerializeField] private int gardenSceneTag = 1;
-    [SerializeField] int multiplierPerLevel = 32;
-
+    [Header("Other")]
+    [SerializeField] private int gardenSceneTag;
+            
     [SerializeField] private int stage = 0;
     [SerializeField] private int[] enemiesOnStage;
 
-    int enemiesOnScene = 0;
+    [SerializeField] Slider slider;
+
+    [SerializeField] int enemiesOnScene = 0;
     int enemiesIterator = 0;
     float spawnTimer = 2f;
     float previousSpawnTime = 0f;
 
     private void Start()
     {
+        slider.maxValue = 0;
         StartingSyncronize();
         AddEnemiesOnStage();
     }
 
     private void Update()
     {
-     if (Time.time > previousSpawnTime+spawnTimer)
+        if (Time.time > previousSpawnTime + spawnTimer)
         {
             previousSpawnTime = Time.time;
             AddEnemiesOnStage();
@@ -62,20 +65,17 @@ public class FightSceneManager : MonoBehaviour
         {
             if (item.GetIsEmpty())
             {
-                Debug.Log("Проверило пустоту области");
-                // Преобразуем точку в координаты вьюпорта
                 Vector3 viewportPoint = Camera.main.WorldToViewportPoint(item.transform.position);
 
-                // Проверяем, находится ли точка в пределах видимости камеры
                 if (!(viewportPoint.z > 0 && viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1))
                 {
-                    Debug.Log("Проверило что вне камеры");
                     if (enemiesOnStage[enemiesIterator] > 0)
                     {
-                        Debug.Log("Проверило что еще можно спавнить");
                         enemiesOnStage[enemiesIterator]--;
                         enemiesOnScene++;
                         GameObject instance = Instantiate(enemies[enemiesIterator], item.transform.position, Quaternion.identity);
+                        slider.maxValue += 1;
+                        slider.value += 1;
                     }
                 }
 
@@ -86,6 +86,7 @@ public class FightSceneManager : MonoBehaviour
     public void EnemyDeath(int tag)
     {
         enemiesOnScene--;
+        slider.value -= 1;
         if (enemiesOnScene <1)
         {
             Win();

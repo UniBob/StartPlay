@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -15,6 +16,7 @@ public class Player : MonoBehaviour
     public delegate void ParamsUpdate(int currentHealth);
     public static ParamsUpdate paramUpdate;
 
+    [Header("Stats")]
     [SerializeField] float fireRate;
     [SerializeField] int currentHealth;
     [SerializeField] int maxHealth;
@@ -26,7 +28,10 @@ public class Player : MonoBehaviour
 
     float nextShotTime;
     bool isAlive;
+    bool canAttack;
     PlayerAttackScript attackScript;
+    [Header("Other")]
+    [SerializeField] int gardenSceneTag;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +43,12 @@ public class Player : MonoBehaviour
         if (HPUpdate != null) { HPUpdate(currentHealth); };
         attackScript = GetComponentInChildren<PlayerAttackScript>();
         attackScript.gameObject.SetActive(false);
+        weaponAnim.gameObject.SetActive(false);
+        overlayAnim.gameObject.SetActive(false);
+        if (SceneManager.GetActiveScene().buildIndex == gardenSceneTag)
+            canAttack = false;
+        else
+            canAttack = true;
     }
 
     private void SyncronizePrayerParams()
@@ -82,14 +93,25 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Fire1") && nextShotTime <= Time.time && isAlive)
+        if (canAttack)
         {
-            nextShotTime = Time.time + fireRate;
-            characterAnim.SetTrigger("Shoot");
-            weaponAnim.SetTrigger("Shoot");
-            overlayAnim.SetTrigger("Shoot");
-            attackScript.gameObject.SetActive(true);
-            attackScript.StartAttack(transform.position);
+            if (Input.GetButton("Fire1") && nextShotTime <= Time.time && isAlive)
+            {
+              //  StopCoroutine(WaitForAnimation());
+
+                weaponAnim.gameObject.SetActive(true);
+                overlayAnim.gameObject.SetActive(true);
+                attackScript.gameObject.SetActive(true);
+                attackScript.StartAttack(transform.position);
+
+                nextShotTime = Time.time + fireRate;
+
+                characterAnim.SetTrigger("Shoot");
+                weaponAnim.SetTrigger("Shoot");
+                overlayAnim.SetTrigger("Shoot");
+
+               // StartCoroutine(WaitForAnimation());
+            }
         }
     }
 

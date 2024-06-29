@@ -19,18 +19,6 @@ public class PlayerAttackScript : MonoBehaviour
     public void StartAttack(Vector3 pos)
     {
         transform.position = pos;
-        StartCoroutine(WaitForAnimation());
     }
 
-    private IEnumerator WaitForAnimation()
-    {
-        yield return new WaitForSeconds(atack.length);
-
-        DoAfterAnimation();
-    }
-
-    private void DoAfterAnimation()
-    {
-        gameObject.SetActive(false);
-    }
 }

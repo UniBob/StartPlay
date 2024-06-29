@@ -101,13 +101,16 @@ public class Enemy : MonoBehaviour
 
     public void GetDamage(float damage)
     {
-        health -= damage;
-        
-        if (health <= 0)
+        if (isAlive)
         {
-            Death();
+            health -= damage;
+
+            if (health <= 0)
+            {
+                Death();
+            }
+            StartCoroutine(ShowHit());
         }
-        StartCoroutine(ShowHit());
     }
     private IEnumerator ShowHit()
     {
