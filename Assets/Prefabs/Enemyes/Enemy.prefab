@@ -195,7 +195,7 @@ MonoBehaviour:
   searchRadius: 100
   atackRadius: 1
   speed: 1
-  timeThatBodyExistsAfterDeath: 0
+  timeThatBodyExistsAfterDeath: 2
   timeOfDeath: 0
   enemyTag: 0
   atackDamage: 3

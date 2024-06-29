@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
 
     float nextShotTime;
     bool isAlive;
+    PlayerAttackScript attackScript;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +36,8 @@ public class Player : MonoBehaviour
         SyncronizePrayerParams();
         nextShotTime = Time.time;
         if (HPUpdate != null) { HPUpdate(currentHealth); };
+        attackScript = GetComponentInChildren<PlayerAttackScript>();
+        attackScript.gameObject.SetActive(false);
     }
 
     private void SyncronizePrayerParams()
@@ -81,9 +84,12 @@ public class Player : MonoBehaviour
     {
         if (Input.GetButton("Fire1") && nextShotTime <= Time.time && isAlive)
         {
+            nextShotTime = Time.time + fireRate;
             characterAnim.SetTrigger("Shoot");
             weaponAnim.SetTrigger("Shoot");
             overlayAnim.SetTrigger("Shoot");
+            attackScript.gameObject.SetActive(true);
+            attackScript.StartAttack(transform.position);
         }
     }
 

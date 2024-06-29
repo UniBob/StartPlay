@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using UnityEngine.U2D;
 
 public class Enemy : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class Enemy : MonoBehaviour
     bool isAlive;
     float nextAtackTime;
     public AIPath aiPath;
-   // Vector2 direction;
+    SpriteRenderer sprite;
 
     private void Start()
     {
@@ -38,6 +39,7 @@ public class Enemy : MonoBehaviour
         aiPath.target = player.gameObject.transform;
         anim = GetComponentInChildren<Animator>();
         anim.SetBool("isAlive", true);
+        sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
    // Update is called once per frame
@@ -100,11 +102,19 @@ public class Enemy : MonoBehaviour
     public void GetDamage(float damage)
     {
         health -= damage;
-
+        
         if (health <= 0)
         {
             Death();
         }
+        StartCoroutine(ShowHit());
+    }
+    private IEnumerator ShowHit()
+    {
+        sprite.color = Color.red;
+        yield return new WaitForSeconds(0.04f);
+        sprite.color = Color.white;
+        yield return new WaitForSeconds(0.04f);
     }
 
     void Death()
