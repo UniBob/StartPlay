@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public static class PrefsKeys
 {
     public static string plantedKey = "whichPlantIsPlantedInTheSpot";
@@ -9,5 +11,13 @@ public static class PrefsKeys
     public static string currentGoldKey = "currentGold";
     public static string stage = "currentStage";
     public static string enemyesOnStage = "enemyesOnStage";
+
+    public static int gardenSceneTag = 0;
+    public static int fightSceneTag = 0;
+
+    public static void ResetData()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 }
 
