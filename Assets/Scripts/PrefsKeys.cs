@@ -20,5 +20,6 @@ public static class PrefsKeys
     {
         PlayerPrefs.DeleteAll();
     }
+    public static string inventorySlots = "inventorySlots";
 }
 

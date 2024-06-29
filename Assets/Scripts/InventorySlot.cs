@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int itemId;
+    public int amount;
+    public bool isEmpty = true;
+    public Image iconGO;
+    public TMP_Text itemAmount;
+
+    private void Awake()
     {
-        
+       // iconGO = GetComponentInChildren<Image>();
+        itemAmount= GetComponentInChildren<TMP_Text>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetIcon(Sprite icon)
     {
-        
+        iconGO.sprite = icon;
     }
 }
