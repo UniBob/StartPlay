@@ -10,7 +10,7 @@ public class DamageDiller : MonoBehaviour
     [SerializeField] float damage;
     private void Start()
     {
-        damage = FindObjectOfType<Player>().GetBulletDamage();
+       // damage = FindObjectOfType<Player>().GetBulletDamage();
     }
     public float GetDamage() { return damage; }
     public void IncreaseDamage(float dam) { damage += dam; }

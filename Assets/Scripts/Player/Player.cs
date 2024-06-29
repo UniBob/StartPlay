@@ -15,17 +15,15 @@ public class Player : MonoBehaviour
     public delegate void ParamsUpdate(int currentHealth);
     public static ParamsUpdate paramUpdate;
 
-    [Header("Prefabs")]
-    [SerializeField] GameObject shotPrefab;
-    [SerializeField] Transform shotPosition;
-
-    [Header("Other options")]
     [SerializeField] float fireRate;
     [SerializeField] int currentHealth;
     [SerializeField] int maxHealth;
-    [SerializeField] float bulletDamage;
 
-    Animator anim;
+    [Header("Animations")]
+    [SerializeField] Animator characterAnim;
+    [SerializeField] Animator weaponAnim;
+    [SerializeField] Animator overlayAnim;
+
     float nextShotTime;
     bool isAlive;
 
@@ -35,7 +33,6 @@ public class Player : MonoBehaviour
         Save += SaveParams;
         isAlive = true;
         SyncronizePrayerParams();
-        anim = GetComponentInChildren<Animator>();
         nextShotTime = Time.time;
         if (HPUpdate != null) { HPUpdate(currentHealth); };
     }
@@ -71,28 +68,12 @@ public class Player : MonoBehaviour
             fireRate = 0.4f;
             PlayerPrefs.SetFloat(PrefsKeys.fireRateKey, fireRate);
         }
-
-        if (PlayerPrefs.HasKey(PrefsKeys.bulletDamageKey))
-        {
-            bulletDamage = PlayerPrefs.GetFloat(PrefsKeys.bulletDamageKey);
-        }
-        else
-        {
-            bulletDamage = 10f;
-            PlayerPrefs.SetFloat(PrefsKeys.bulletDamageKey, bulletDamage);
-        }
     }
-
     private void SaveParams()
     {
         PlayerPrefs.SetInt(PrefsKeys.maxHealthKey, maxHealth);
         PlayerPrefs.SetInt(PrefsKeys.currentHealthKey, currentHealth);
         PlayerPrefs.SetFloat(PrefsKeys.fireRateKey, fireRate);
-        PlayerPrefs.SetFloat(PrefsKeys.bulletDamageKey, bulletDamage);
-    }
-    public float GetBulletDamage()
-    {
-        return bulletDamage;
     }
 
     // Update is called once per frame
@@ -100,12 +81,12 @@ public class Player : MonoBehaviour
     {
         if (Input.GetButton("Fire1") && nextShotTime <= Time.time && isAlive)
         {
-            Debug.Log("shoot");
-            Instantiate(shotPrefab, shotPosition.position, transform.rotation);
-            nextShotTime = Time.time + fireRate;
-            anim.SetTrigger("Shoot");
+            characterAnim.SetTrigger("Shoot");
+            weaponAnim.SetTrigger("Shoot");
+            overlayAnim.SetTrigger("Shoot");
         }
     }
+
 
     public void GetDamage(int damage)
     {
