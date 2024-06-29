@@ -30,8 +30,6 @@ public class Player : MonoBehaviour
     bool isAlive;
     bool canAttack;
     PlayerAttackScript attackScript;
-    [Header("Other")]
-    [SerializeField] int gardenSceneTag;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +43,7 @@ public class Player : MonoBehaviour
         attackScript.gameObject.SetActive(false);
         weaponAnim.gameObject.SetActive(false);
         overlayAnim.gameObject.SetActive(false);
-        if (SceneManager.GetActiveScene().buildIndex == gardenSceneTag)
+        if (SceneManager.GetActiveScene().buildIndex == PrefsKeys.gardenSceneTag)
             canAttack = false;
         else
             canAttack = true;

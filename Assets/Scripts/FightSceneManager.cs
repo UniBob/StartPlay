@@ -13,9 +13,7 @@ public class FightSceneManager : MonoBehaviour
     [Header("Spawn Areas")]
     [SerializeField] private AreaListner[] areas;
 
-    [Header("Other")]
-    [SerializeField] private int gardenSceneTag;
-            
+    [Header("Other")]            
     [SerializeField] private int stage = 0;
     [SerializeField] private int[] enemiesOnStage;
 
@@ -102,6 +100,6 @@ public class FightSceneManager : MonoBehaviour
 
         stage++;
         PlayerPrefs.SetInt(PrefsKeys.stage, stage);
-        SceneManager.LoadScene(gardenSceneTag);
+        SceneManager.LoadScene(PrefsKeys.gardenSceneTag);
     }
 }
