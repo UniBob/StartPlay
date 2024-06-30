@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Newtonsoft.Json;
-using static GardenKeeperScript;
-using static UnityEditor.Progress;
 
 public class InventoryManager : MonoBehaviour
 {
     [SerializeField] Transform inventoryGrid;
     [SerializeField] GameObject inventoryUIPanel;
+    [SerializeField] public bool isOpenForPlanting = false;
     PlantsKeeper plantsKeeper;
     public List<InventorySlot> slots = new List<InventorySlot>();
     [SerializeField] public Vector2Int[] slotsForSave;
@@ -16,10 +14,11 @@ public class InventoryManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Player.Save += SaveInventorySlots;
+
         LoadArray(PrefsKeys.inventorySlots);
 
         plantsKeeper = FindObjectOfType<PlantsKeeper>();
-        Player.Save += SaveInventorySlots;
         inventoryUIPanel.SetActive(false);
 
         for (int i = 0; i < inventoryGrid.childCount; i++)
@@ -31,6 +30,8 @@ public class InventoryManager : MonoBehaviour
                 slots.Add(inventorySlot);
             }
         }
+
+        AddLoadedItemToInventory();
     }
 
     // Update is called once per frame
@@ -54,9 +55,12 @@ public class InventoryManager : MonoBehaviour
                 return;
             }
         }
+
         Debug.Log("set1");
+        Debug.Log("slots: " + slots.Count);
         foreach (InventorySlot slot in slots)
         {
+            Debug.Log("set2");
 
             if (slot.isEmpty)
             {
@@ -86,7 +90,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         string json = JsonUtility.ToJson(new Serialization<Vector2Int>(slotsForSave));
-        PlayerPrefs.SetString(PrefsKeys.plantedKey, json);
+        PlayerPrefs.SetString(PrefsKeys.inventorySlots, json);
         PlayerPrefs.Save();
     }
 
@@ -113,6 +117,14 @@ public class InventoryManager : MonoBehaviour
         {
             string json = PlayerPrefs.GetString(key);
             slotsForSave = JsonUtility.FromJson<Serialization<Vector2Int>>(json).ToArray();
+        }
+    }
+
+    void AddLoadedItemToInventory()
+    {
+        foreach (Vector2Int slotData in slotsForSave)
+        {
+            AddItem(slotData.x, slotData.y);
         }
     }
 }
