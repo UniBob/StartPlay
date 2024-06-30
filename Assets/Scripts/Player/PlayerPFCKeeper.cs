@@ -20,6 +20,7 @@ public class PlayerPFCKeeper : MonoBehaviour
     {
         playerCurrentPFC += PFC;
         currentKilocalories += kcal;
+        PFCUIListner.UpdateUI(playerCurrentPFC, currentKilocalories);
     }
 
     public void AddPFCbyItemId(int itemId)
@@ -101,5 +102,14 @@ public class PlayerPFCKeeper : MonoBehaviour
             int tmpParametr = PlayerPrefs.GetInt(key);
             PlayerPrefs.SetInt(key, tmpParametr + increase);
         }
+    }
+
+    public Vector3 GetPFC()
+    {
+        return expectedPFC;
+    }
+    public float GetKcal()
+    {
+        return expectedKcal;
     }
 }
