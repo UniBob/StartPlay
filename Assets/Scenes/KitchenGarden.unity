@@ -32663,7 +32663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 860de4b99ce138343a833824f9b7dc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fightSceneTag: 1
+  fightSceneTag: 2
 --- !u!70 &1828335024
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
