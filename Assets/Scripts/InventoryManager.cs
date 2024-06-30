@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
+using static GardenKeeperScript;
+using static UnityEditor.Progress;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -8,11 +10,14 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] GameObject inventoryUIPanel;
     PlantsKeeper plantsKeeper;
     public List<InventorySlot> slots = new List<InventorySlot>();
+    [SerializeField] public Vector2Int[] slotsForSave;
     bool isOpen = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        LoadArray(PrefsKeys.inventorySlots);
+
         plantsKeeper = FindObjectOfType<PlantsKeeper>();
         Player.Save += SaveInventorySlots;
         inventoryUIPanel.SetActive(false);
@@ -24,7 +29,6 @@ public class InventoryManager : MonoBehaviour
             {
                 inventorySlot.itemId = 60000;
                 slots.Add(inventorySlot);
-
             }
         }
     }
@@ -68,9 +72,21 @@ public class InventoryManager : MonoBehaviour
 
     private void SaveInventorySlots()
     {
-        string json = JsonConvert.SerializeObject(slots, Formatting.Indented);
-        Debug.Log(json);
-        PlayerPrefs.SetString(PrefsKeys.inventorySlots, json);
+        int index = 0;
+        foreach (InventorySlot slot in slots)
+        {
+            if (slot.itemId != 60000)
+            {
+                Debug.Log(slot.itemId + "  " + slot.amount);
+                Debug.Log("index:  " + index);
+                Debug.Log("slotsForSave[]:  " + slotsForSave.Length);
+                slotsForSave[index] = new Vector2Int (slot.itemId, slot.amount);
+                index++;
+            }
+        }
+
+        string json = JsonUtility.ToJson(new Serialization<Vector2Int>(slotsForSave));
+        PlayerPrefs.SetString(PrefsKeys.plantedKey, json);
         PlayerPrefs.Save();
     }
 
@@ -88,6 +104,15 @@ public class InventoryManager : MonoBehaviour
         public T[] ToArray()
         {
             return items;
+        }
+    }
+
+    void LoadArray(string key)
+    {
+        if (PlayerPrefs.HasKey(key))
+        {
+            string json = PlayerPrefs.GetString(key);
+            slotsForSave = JsonUtility.FromJson<Serialization<Vector2Int>>(json).ToArray();
         }
     }
 }
