@@ -39,8 +39,7 @@ public class Player : MonoBehaviour
         SyncronizePrayerParams();
         nextShotTime = Time.time;
         if (HPUpdate != null) { HPUpdate(currentHealth); };
-        attackScript = GetComponentInChildren<PlayerAttackScript>();
-        attackScript.gameObject.SetActive(false);
+        attackScript = GetComponent<PlayerAttackScript>();
         weaponAnim.gameObject.SetActive(false);
         overlayAnim.gameObject.SetActive(false);
         if (SceneManager.GetActiveScene().buildIndex == PrefsKeys.gardenSceneTag)
@@ -92,17 +91,17 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {       
         if (canAttack)
         {
             if (Input.GetButton("Fire1") && nextShotTime <= Time.time && isAlive)
             {
-              //  StopCoroutine(WaitForAnimation());
+                //  StopCoroutine(WaitForAnimation());
 
                 weaponAnim.gameObject.SetActive(true);
                 overlayAnim.gameObject.SetActive(true);
-                attackScript.gameObject.SetActive(true);
-                attackScript.StartAttack(transform.position);
+               // attackScript.gameObject.SetActive(true);
+                attackScript.StartAttack();
 
                 nextShotTime = Time.time + fireRate;
 
@@ -153,10 +152,5 @@ public class Player : MonoBehaviour
             currentHealth += heal;
             return true;
         }
-    }
-
-    public void BonusAddition(float damage, float fireRate, int health, float movomentSpeed)
-    {
-
     }
 }
