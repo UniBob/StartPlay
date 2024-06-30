@@ -37,9 +37,9 @@ public class InventoryItemClickHandler : MonoBehaviour, IPointerClickHandler
         {
             //вызов логики посадки
             Debug.Log("Несите навоз ...");
-            IncriseItemAmount(slotInfo);
             gardenKeeper.PlantIsPlanted(itemId);
             inventoryManager.CloseInventory();
+            IncriseItemAmount(slotInfo);
         }
 
         if (!isOpenForPlanting && type == ObjectTypes.plant)

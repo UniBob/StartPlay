@@ -8,6 +8,7 @@ public class GardenHelperRobot : MonoBehaviour
     InventoryManager inventoryManager;
     [SerializeField] int[] growingFruits;
     bool isGrowingFruitsReceived = false;
+    bool isPhraseActive = false;
     [SerializeField] RobotPhrasesScript robotPhrases;
 
     private void Start()
@@ -18,6 +19,7 @@ public class GardenHelperRobot : MonoBehaviour
 
         growingFruits = gardenKeeper.whichPlantIsPlantedInTheSpot2;
         isGrowingFruitsReceived = false;
+        isPhraseActive = false;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -34,6 +36,7 @@ public class GardenHelperRobot : MonoBehaviour
         if (other.GetComponent<Player>() != null)
         {
             isPlayerNearby = false;
+            isPhraseActive = false;
             buttonIcon.SetActive(false);
             robotPhrases.ActivatePhrase(false);
         }
@@ -45,7 +48,6 @@ public class GardenHelperRobot : MonoBehaviour
         {
             foreach (int fruit in growingFruits)
             {
-                robotPhrases.ActivatePhrase(true);
                 inventoryManager.AddItem(fruit, 3, ObjectTypes.plant);
             }
 
@@ -53,6 +55,12 @@ public class GardenHelperRobot : MonoBehaviour
             isGrowingFruitsReceived = true;
 
 
+        }
+
+        if (isPlayerNearby && Input.GetKeyDown(KeyCode.E) && !isPhraseActive)
+        {
+            robotPhrases.ActivatePhrase(true);
+            isPhraseActive = true;
         }
     }
 }
