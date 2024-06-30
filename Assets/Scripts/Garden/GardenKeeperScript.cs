@@ -109,6 +109,10 @@ public class GardenKeeperScript : MonoBehaviour
     public void SetActualPlantsSpots(int actualSpot)
     {
         actualPlantSpot = actualSpot;
-        ChoosePlantingPlantPanel.SetActive(true);
+        //ChoosePlantingPlantPanel.SetActive(true);
+        InventoryManager inventoryManager = FindObjectOfType<InventoryManager>();
+        inventoryManager.OpenInventory();
+        inventoryManager.isOpenForPlanting = true;
+        inventoryManager.isOpen = true;
     }
 }
