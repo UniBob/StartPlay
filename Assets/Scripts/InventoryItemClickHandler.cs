@@ -46,9 +46,9 @@ public class InventoryItemClickHandler : MonoBehaviour, IPointerClickHandler
         {
             //вызов логики поедания предмета
             Debug.Log("Кушою ... Ням-ням");
-            IncriseItemAmount(slotInfo);
             Debug.Log("slotInfo: " + slotInfo.itemId);
             playerPFCKeeper.AddPFCbyItemId(slotInfo.itemId);
+            IncriseItemAmount(slotInfo);
 
         }
     }
@@ -57,5 +57,15 @@ public class InventoryItemClickHandler : MonoBehaviour, IPointerClickHandler
     {
         slotInfo.amount --;
         slotInfo.itemAmount.text = slotInfo.amount.ToString();
+
+        if (slotInfo.amount <= 0)
+        {
+            slotInfo.itemId = 60000;
+            slotInfo.amount = 0;
+            slotInfo.type = ObjectTypes.plant;
+            slotInfo.isEmpty = true;
+            slotInfo.iconGO.sprite = null;
+            slotInfo.itemAmount.text = "";
+        }
     }
 }
