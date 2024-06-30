@@ -7764,6 +7764,7 @@ GameObject:
   - component: {fileID: 884045365}
   - component: {fileID: 884045364}
   - component: {fileID: 884045366}
+  - component: {fileID: 884045367}
   m_Layer: 0
   m_Name: Keepers
   m_TagString: Untagged
@@ -7882,6 +7883,21 @@ MonoBehaviour:
   inventoryGrid: {fileID: 1118086138}
   inventoryUIPanel: {fileID: 1850939703}
   slots: []
+  slotsForSave: []
+--- !u!114 &884045367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884045360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee93921a12c76b42afd0b84ec2179aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expectedPFC: {x: 0, y: 0, z: 0}
+  expectedKcal: 0
 --- !u!1 &898033036
 GameObject:
   m_ObjectHideFlags: 0

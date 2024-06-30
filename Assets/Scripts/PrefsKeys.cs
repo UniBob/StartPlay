@@ -12,6 +12,7 @@ public static class PrefsKeys
     public static string stage = "currentStage";
     public static string enemyesOnStage = "enemyesOnStage";
     public static string textDataPage = "textDataPage";
+    public static string playerMovementSpeed = "playerMovementSpeed";
 
     public static int gardenSceneTag = 0;
     public static int fightSceneTag = 0;
