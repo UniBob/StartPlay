@@ -24147,7 +24147,7 @@ AudioSource:
   m_GameObject: {fileID: 447002084}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: aa8f07e8310f38c4e8b5d36c7d78f9ed, type: 2}
   m_audioClip: {fileID: 8300000, guid: e198d13dbae78864d902b192012959fd, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -26234,6 +26234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryGrid: {fileID: 1118086138}
   inventoryUIPanel: {fileID: 1850939703}
+  isOpenForPlanting: 0
   slots: []
   slotsForSave: []
 --- !u!114 &884045367
@@ -26248,8 +26249,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ee93921a12c76b42afd0b84ec2179aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expectedPFC: {x: 0, y: 0, z: 0}
-  expectedKcal: 0
+  expectedPFC: {x: 96, y: 53, z: 117}
+  expectedKcal: 1850
 --- !u!1 &898033036
 GameObject:
   m_ObjectHideFlags: 0
