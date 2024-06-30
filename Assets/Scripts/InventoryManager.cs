@@ -5,11 +5,12 @@ public class InventoryManager : MonoBehaviour
 {
     [SerializeField] Transform inventoryGrid;
     [SerializeField] GameObject inventoryUIPanel;
-    [SerializeField] public bool isOpenForPlanting = false;
     PlantsKeeper plantsKeeper;
+    SeedsKeeper seedsKeeper;
     public List<InventorySlot> slots = new List<InventorySlot>();
-    [SerializeField] public Vector2Int[] slotsForSave;
-    bool isOpen = false;
+    [SerializeField] public Vector3Int[] slotsForSave;
+    public bool isOpen = false;
+    public bool isOpenForPlanting = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,7 @@ public class InventoryManager : MonoBehaviour
         LoadArray(PrefsKeys.inventorySlots);
 
         plantsKeeper = FindObjectOfType<PlantsKeeper>();
+        seedsKeeper = FindObjectOfType<SeedsKeeper>();
         inventoryUIPanel.SetActive(false);
 
         for (int i = 0; i < inventoryGrid.childCount; i++)
@@ -41,14 +43,26 @@ public class InventoryManager : MonoBehaviour
         {
             isOpen = !isOpen;
             inventoryUIPanel.SetActive(isOpen);
+
+            if (!isOpen)
+            {
+                isOpenForPlanting = false;
+            }
         }
     }
 
-    public void AddItem(int _item, int _amount)
+    public void AddItem(int _item, int _amount, ObjectTypes _type)
     {
+        if (_amount <= 0)
+        {
+            return;
+        }
+
+        //Debug.Log("_item: " + _item + ", _amount: " + _amount + ", _type: " + _type);
         foreach (InventorySlot slot in slots)
         {
-            if (slot.itemId == _item)
+            //Debug.Log("slot.itemId: " + slot.itemId + ", slot.type: " + slot.type);
+            if (slot.itemId == _item && slot.type == _type)
             {
                 slot.amount += _amount;
                 slot.itemAmount.text = slot.amount.ToString();
@@ -56,17 +70,25 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        Debug.Log("set1");
-        Debug.Log("slots: " + slots.Count);
+        //Debug.Log("Нету схожих в инвентаре");
+
         foreach (InventorySlot slot in slots)
         {
-            Debug.Log("set2");
-
+            //Debug.Log("slot.itemId: " + slot.itemId + ", slot.type: " + slot.type);
             if (slot.isEmpty)
             {
+                //Debug.Log("пустой слот");
                 slot.itemId = _item;
                 slot.amount = _amount;
-                slot.SetIcon(plantsKeeper.allPlants[_item].fruitSprite);
+                slot.type = _type;
+                if (slot.type == ObjectTypes.plant)
+                {
+                    slot.SetIcon(plantsKeeper.allPlants[_item].fruitSprite);
+                }
+                if (slot.type == ObjectTypes.seed)
+                {
+                    slot.SetIcon(seedsKeeper.allSeeds[_item].sprite);
+                }
                 slot.itemAmount.text = _amount.ToString();
                 slot.isEmpty = false;
                 return;
@@ -79,17 +101,17 @@ public class InventoryManager : MonoBehaviour
         int index = 0;
         foreach (InventorySlot slot in slots)
         {
-            if (slot.itemId != 60000)
+            if (!slot.isEmpty)
             {
                 Debug.Log(slot.itemId + "  " + slot.amount);
-                Debug.Log("index:  " + index);
-                Debug.Log("slotsForSave[]:  " + slotsForSave.Length);
-                slotsForSave[index] = new Vector2Int (slot.itemId, slot.amount);
+                slotsForSave[index] = new Vector3Int (slot.itemId, slot.amount, (int)slot.type);
                 index++;
             }
         }
 
-        string json = JsonUtility.ToJson(new Serialization<Vector2Int>(slotsForSave));
+        string json = JsonUtility.ToJson(new Serialization<Vector3Int>(slotsForSave));
+
+        Debug.Log("json:  " + json);
         PlayerPrefs.SetString(PrefsKeys.inventorySlots, json);
         PlayerPrefs.Save();
     }
@@ -116,15 +138,20 @@ public class InventoryManager : MonoBehaviour
         if (PlayerPrefs.HasKey(key))
         {
             string json = PlayerPrefs.GetString(key);
-            slotsForSave = JsonUtility.FromJson<Serialization<Vector2Int>>(json).ToArray();
+            slotsForSave = JsonUtility.FromJson<Serialization<Vector3Int>>(json).ToArray();
         }
     }
 
     void AddLoadedItemToInventory()
     {
-        foreach (Vector2Int slotData in slotsForSave)
+        foreach (Vector3Int slotData in slotsForSave)
         {
-            AddItem(slotData.x, slotData.y);
+            AddItem(slotData.x, slotData.y, (ObjectTypes)slotData.z);
         }
+    }
+
+    public void OpenInventory()
+    {
+        inventoryUIPanel.SetActive(true);
     }
 }

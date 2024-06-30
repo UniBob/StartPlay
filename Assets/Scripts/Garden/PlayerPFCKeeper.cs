@@ -7,17 +7,28 @@ public class PlayerPFCKeeper : MonoBehaviour
 
     [SerializeField] Vector3 expectedPFC;
     [SerializeField] float expectedKcal;
-    Vector3 playerCurrentPFC;
-    float currentKilocalories;
+    PlantsKeeper plantsKeeper;
+    [SerializeField] Vector3 playerCurrentPFC;
+    [SerializeField] float currentKilocalories;
 
     private void Start()
     {
         Check += FinalPFCCheck;
+        plantsKeeper = FindObjectOfType<PlantsKeeper>();
     }
     public void AddPFC(Vector3 PFC, float kcal)
     {
         playerCurrentPFC += PFC;
         currentKilocalories += kcal;
+    }
+
+    public void AddPFCbyItemId(int itemId)
+    {
+        PlantTemplate plant = plantsKeeper.allPlants[itemId];
+        Debug.Log("plant: " + plant.name);
+        Debug.Log("plant.pfc: " + plant.pfc);
+        Debug.Log("plant.calorie: " + plant.calorie);
+        AddPFC(plant.pfc, plant.calorie);
     }
 
     private void FinalPFCCheck()

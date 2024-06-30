@@ -8,6 +8,7 @@ public class InventorySlot : MonoBehaviour
 {
     public int itemId;
     public int amount;
+    public ObjectTypes type;
     public bool isEmpty = true;
     public Image iconGO;
     public TMP_Text itemAmount;
