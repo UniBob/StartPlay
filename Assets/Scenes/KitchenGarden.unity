@@ -746,6 +746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 0
   amount: 3
+  type: 0
 --- !u!212 &121898466
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1000,6 +1001,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 0
   amount: 3
+  type: 0
 --- !u!212 &247428182
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -26159,6 +26161,8 @@ MonoBehaviour:
   plantsPrices: 00000000
   goldKeeper: {fileID: 0}
   ChoosePlantingPlantPanel: {fileID: 632397917}
+  whichPlantIsPlantedInTheSpot2: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+  plantsKeeper: {fileID: 0}
 --- !u!4 &884045362
 Transform:
   m_ObjectHideFlags: 0
@@ -26234,9 +26238,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryGrid: {fileID: 1118086138}
   inventoryUIPanel: {fileID: 1850939703}
-  isOpenForPlanting: 0
   slots: []
   slotsForSave: []
+  isOpen: 0
+  isOpenForPlanting: 0
 --- !u!114 &884045367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26251,6 +26256,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expectedPFC: {x: 96, y: 53, z: 117}
   expectedKcal: 1850
+  playerCurrentPFC: {x: 0, y: 0, z: 0}
+  currentKilocalories: 0
 --- !u!1 &898033036
 GameObject:
   m_ObjectHideFlags: 0
@@ -27266,6 +27273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 3
   amount: 5
+  type: 0
 --- !u!212 &1112300398
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -27662,6 +27670,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 3
   amount: 5
+  type: 0
 --- !u!212 &1136744206
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -28672,6 +28681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 1
   amount: 3
+  type: 0
 --- !u!212 &1265900810
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -31748,6 +31758,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 3
   amount: 5
+  type: 0
 --- !u!212 &1424004342
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -32861,6 +32872,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 1
   amount: 3
+  type: 0
 --- !u!212 &1745168108
 SpriteRenderer:
   m_ObjectHideFlags: 0

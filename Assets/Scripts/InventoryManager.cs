@@ -104,7 +104,7 @@ public class InventoryManager : MonoBehaviour
             if (!slot.isEmpty)
             {
                 Debug.Log(slot.itemId + "  " + slot.amount);
-                slotsForSave[index] = new Vector3Int (slot.itemId, slot.amount, (int)slot.type);
+                slotsForSave[index] = new Vector3Int(slot.itemId, slot.amount, (int)slot.type);
                 index++;
             }
         }
@@ -153,5 +153,13 @@ public class InventoryManager : MonoBehaviour
     public void OpenInventory()
     {
         inventoryUIPanel.SetActive(true);
+        isOpen = true;
+    }
+
+    public void CloseInventory()
+    {
+        inventoryUIPanel.SetActive(false);
+        isOpen = false;
+        isOpenForPlanting = false;
     }
 }

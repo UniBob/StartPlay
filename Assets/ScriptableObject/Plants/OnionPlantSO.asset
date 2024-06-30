@@ -19,5 +19,5 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 4acb2d5b33a8bc44fa6955e3fcbb8ffa, type: 3}
   fruitCost: 5
   fruitSprite: {fileID: 21300000, guid: 994320b7619527143831e81c33861025, type: 2}
-  pfc: {x: 0.2, y: 0, z: 0}
-  calorie: 0
+  pfc: {x: 1.4, y: 0.05, z: 10.4}
+  calorie: 41

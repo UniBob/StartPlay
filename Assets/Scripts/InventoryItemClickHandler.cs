@@ -5,10 +5,14 @@ using UnityEngine.EventSystems;
 public class InventoryItemClickHandler : MonoBehaviour, IPointerClickHandler
 {
     PlayerPFCKeeper playerPFCKeeper;
+    GardenKeeperScript gardenKeeper;
+    InventoryManager inventoryManager;
 
     private void Start()
     {
         playerPFCKeeper = FindObjectOfType<PlayerPFCKeeper>();
+        gardenKeeper = FindObjectOfType<GardenKeeperScript>();
+        inventoryManager = FindObjectOfType<InventoryManager>();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -27,13 +31,15 @@ public class InventoryItemClickHandler : MonoBehaviour, IPointerClickHandler
             return;
         }
 
-        bool isOpenForPlanting = FindObjectOfType<InventoryManager>().isOpenForPlanting;
+        bool isOpenForPlanting = inventoryManager.isOpenForPlanting;
 
         if (isOpenForPlanting && type == ObjectTypes.seed)
         {
             //вызов логики посадки
             Debug.Log("Несите навоз ...");
             IncriseItemAmount(slotInfo);
+            gardenKeeper.PlantIsPlanted(itemId);
+            inventoryManager.CloseInventory();
         }
 
         if (!isOpenForPlanting && type == ObjectTypes.plant)

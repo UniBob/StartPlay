@@ -3,6 +3,7 @@ using UnityEngine;
 public static class PrefsKeys
 {
     public static string plantedKey = "whichPlantIsPlantedInTheSpot";
+    public static string plantedKey2 = "whichPlantIsPlantedInTheSpot2";
     public static string clearLocationKey = "healthOnLocationEnd";
     public static string maxHealthKey = "maxHealth";
     public static string currentHealthKey = "currentHealth";
