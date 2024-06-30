@@ -76,11 +76,9 @@ public class Player : MonoBehaviour
         }
         else
         {
-            fireRate = 0.4f;
+            fireRate = 1f;
             PlayerPrefs.SetFloat(PrefsKeys.fireRateKey, fireRate);
-        }
-
-        
+        }        
     }
     private void SaveParams()
     {

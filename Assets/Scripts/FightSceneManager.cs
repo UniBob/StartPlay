@@ -97,6 +97,7 @@ public class FightSceneManager : MonoBehaviour
 
     private void Win()
     {
+        Player.Save();
         stage++;
         PlayerPrefs.SetInt(PrefsKeys.stage, stage);
         SceneManager.LoadScene(PrefsKeys.dialogueSceneTag);

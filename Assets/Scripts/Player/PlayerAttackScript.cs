@@ -4,18 +4,27 @@ using UnityEngine;
 
 public class PlayerAttackScript : MonoBehaviour
 {
-    [SerializeField] AnimationClip atack;
     [SerializeField] float damage;
     [SerializeField] float radius;
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    Enemy enemy = collision.GetComponent<Enemy>();
-    //    if (enemy != null)
-    //    {
-    //        enemy.GetDamage(damage);
-    //    }
-    //}
+    private void Start()
+    {
+        if (PlayerPrefs.HasKey(PrefsKeys.bulletDamageKey))
+        {
+            damage = PlayerPrefs.GetFloat(PrefsKeys.bulletDamageKey);
+        }
+        else
+        {
+            damage = 10;
+            PlayerPrefs.SetFloat(PrefsKeys.bulletDamageKey, damage);
+        }
+        Player.Save += SaveDamage;
+    }
+
+    private void SaveDamage()
+    {
+        PlayerPrefs.SetFloat(PrefsKeys.bulletDamageKey, damage);
+    }
 
     public void StartAttack()
     {
@@ -25,5 +34,4 @@ public class PlayerAttackScript : MonoBehaviour
             i.GetComponent<Enemy>().GetDamage(damage);
         }
     }
-
 }
