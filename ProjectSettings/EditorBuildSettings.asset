@@ -6,9 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/StartPageScene.unity
+    guid: 0d6f3ae9aa49b524591986258907c64c
+  - enabled: 1
     path: Assets/Scenes/KitchenGarden.unity
     guid: dac8d846fac2fd840be14a7dd8375a83
   - enabled: 1
     path: Assets/Scenes/FightLocation.unity
     guid: a4a0277a3e952c04da28213a69c8f160
+  - enabled: 1
+    path: Assets/Scenes/DialogueScene.unity
+    guid: 4602cc4af781e55458f1266be702382c
   m_configObjects: {}

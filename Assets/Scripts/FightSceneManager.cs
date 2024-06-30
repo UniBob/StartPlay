@@ -41,15 +41,15 @@ public class FightSceneManager : MonoBehaviour
     }
     private void StartingSyncronize()
     {
-        //if (PlayerPrefs.HasKey(PrefsKeys.stage))
-        //{
-        //    stage = PlayerPrefs.GetInt(PrefsKeys.stage);
-        //}
-        //else
-        //{
-        //    stage = 1;
-        //    PlayerPrefs.SetInt(PrefsKeys.stage, stage);
-        //}
+        if (PlayerPrefs.HasKey(PrefsKeys.stage))
+        {
+            stage = PlayerPrefs.GetInt(PrefsKeys.stage);
+        }
+        else
+        {
+            stage = 1;
+            PlayerPrefs.SetInt(PrefsKeys.stage, stage);
+        }
         enemiesOnStage = new int[stages[stage].enemiesCount.Length];
         for(int i = 0;i<enemiesOnStage.Length;i++)
         {
@@ -97,9 +97,8 @@ public class FightSceneManager : MonoBehaviour
 
     private void Win()
     {
-
         stage++;
         PlayerPrefs.SetInt(PrefsKeys.stage, stage);
-        SceneManager.LoadScene(PrefsKeys.gardenSceneTag);
+        SceneManager.LoadScene(PrefsKeys.dialogueSceneTag);
     }
 }

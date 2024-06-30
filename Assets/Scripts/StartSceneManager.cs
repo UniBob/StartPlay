@@ -35,7 +35,7 @@ public class StartSceneManager : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene(PrefsKeys.gardenSceneTag);
+            SceneManager.LoadScene(PrefsKeys.dialogueSceneTag);
         }
     }
 
@@ -52,7 +52,7 @@ public class StartSceneManager : MonoBehaviour
     public void YesButtonAproveWindow()
     {
         PrefsKeys.ResetData();
-        SceneManager.LoadScene(PrefsKeys.gardenSceneTag);
+        SceneManager.LoadScene(PrefsKeys.dialogueSceneTag);
     }
     public void NoButtonAproveWindow()
     {

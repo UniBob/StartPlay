@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TextOutputController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class TextOutputController : MonoBehaviour
     int currentWritingLetter;
     string currentWritingText;
     float lastAddingLetterTime;
+    bool isFireButtonPressed = false;
 
     void Start()
     {
@@ -36,6 +38,34 @@ public class TextOutputController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetButton("Fire1"))
+        {
+            if (!isFireButtonPressed)
+            {
+                isFireButtonPressed = true;
+                if (currentWritingLetter < currentWritingText.Length)
+                {
+                    currentWritingLetter = currentWritingText.Length;
+                    textBox.text = currentWritingText;
+                }
+                else
+                {
+                    if (textData[textDataIterator].isEndOfDialogie)
+                    {
+                        textDataIterator++;
+                        SceneManager.LoadScene(PrefsKeys.gardenSceneTag);
+                    }
+                    textBox.text = "";
+                    currentWritingText = textData[++textDataIterator].textboxText;
+                    currentWritingLetter = 0;
+                }
+            }
+        }
+        else
+        {
+            isFireButtonPressed = false;
+        }
+
         if (currentWritingLetter < currentWritingText.Length)
         {
             lastAddingLetterTime -= Time.deltaTime;
@@ -43,15 +73,6 @@ public class TextOutputController : MonoBehaviour
             {
                 textBox.text = textBox.text + currentWritingText[currentWritingLetter++];
                 lastAddingLetterTime = textOutputDelay;
-            }
-        }
-        else
-        {
-            if (Input.GetButton("Fire1"))
-            {
-                textBox.text = "";
-                currentWritingText = textData[++textDataIterator].textboxText;
-                currentWritingLetter = 0;
             }
         }
     }
