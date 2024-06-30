@@ -1,6 +1,4 @@
 using UnityEngine;
-using Newtonsoft.Json;
-using static GardenKeeperScript;
 
 public class GardenKeeperScript : MonoBehaviour
 {
@@ -15,12 +13,12 @@ public class GardenKeeperScript : MonoBehaviour
        
     [SerializeField] PlantsSpotScript[] plantsSpots;
     [SerializeField] Sprite[] plantsSprites;
-    [SerializeField] Plants[] whichPlantIsPlantedInTheSpot;
+    //[SerializeField] Plants[] whichPlantIsPlantedInTheSpot;
     [SerializeField] int[] plantsPrices;
     [SerializeField] GoldKeeperScript goldKeeper;
     [SerializeField] GameObject ChoosePlantingPlantPanel;
 
-    [SerializeField] int[] whichPlantIsPlantedInTheSpot2;
+    [SerializeField] public int[] whichPlantIsPlantedInTheSpot2;
     [SerializeField] PlantsKeeper plantsKeeper;
 
     private int actualPlantSpot;
@@ -28,7 +26,7 @@ public class GardenKeeperScript : MonoBehaviour
     private void Start()
     {
         Player.Save += SaveSpotsStatus;
-        LoadArray(PrefsKeys.plantedKey);
+        //LoadArray(PrefsKeys.plantedKey);
         LoadArray2(PrefsKeys.plantedKey2);
         /*
         if (PlayerPrefs.HasKey(PrefsKeys.clearLocationKey))
@@ -87,9 +85,9 @@ public class GardenKeeperScript : MonoBehaviour
 
     public void SaveSpotsStatus()
     {
-        string json = JsonUtility.ToJson(new Serialization<Plants>(whichPlantIsPlantedInTheSpot));
+        //string json = JsonUtility.ToJson(new Serialization<Plants>(whichPlantIsPlantedInTheSpot));
         string json2 = JsonUtility.ToJson(new Serialization<int>(whichPlantIsPlantedInTheSpot2));
-        PlayerPrefs.SetString(PrefsKeys.plantedKey, json);
+        //PlayerPrefs.SetString(PrefsKeys.plantedKey, json);
         PlayerPrefs.SetString(PrefsKeys.plantedKey2, json2);
         PlayerPrefs.Save();
     }
@@ -112,14 +110,14 @@ public class GardenKeeperScript : MonoBehaviour
     }
 
 
-    void LoadArray(string key)
+    /*void LoadArray(string key)
     {
         if (PlayerPrefs.HasKey(key))
         {
             string json = PlayerPrefs.GetString(key);
             whichPlantIsPlantedInTheSpot = JsonUtility.FromJson<Serialization<Plants>>(json).ToArray();
         }
-    }
+    }*/
     void LoadArray2(string key)
     {
         if (PlayerPrefs.HasKey(key))

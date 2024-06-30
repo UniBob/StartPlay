@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -16,7 +14,7 @@ public class RobotPhrasesScript : MonoBehaviour
         render.enabled = false;
         text.gameObject.SetActive(false);
     }
-    public void SetActive(bool active)
+    public void ActivatePhrase(bool active)
     {
         if (active)
         {
