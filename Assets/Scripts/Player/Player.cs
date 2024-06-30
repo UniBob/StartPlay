@@ -80,6 +80,8 @@ public class Player : MonoBehaviour
             fireRate = 0.4f;
             PlayerPrefs.SetFloat(PrefsKeys.fireRateKey, fireRate);
         }
+
+        
     }
     private void SaveParams()
     {

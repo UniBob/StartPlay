@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayeMovement : MonoBehaviour
@@ -11,6 +9,18 @@ public class PlayeMovement : MonoBehaviour
 
     void Start()
     {
+        Player.Save += SpeedSave;
+
+        if (PlayerPrefs.HasKey(PrefsKeys.playerMovementSpeed))
+        {
+            speed = PlayerPrefs.GetFloat(PrefsKeys.playerMovementSpeed);
+        }
+        else
+        {
+            speed = 2f;
+            PlayerPrefs.SetFloat(PrefsKeys.playerMovementSpeed, speed);
+        }
+
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -19,6 +29,11 @@ public class PlayeMovement : MonoBehaviour
     {
         Rotate();
         Move();
+    }
+
+    private void SpeedSave()
+    {
+        PlayerPrefs.SetFloat (PrefsKeys.playerMovementSpeed, speed);
     }
 
     private void Rotate()
