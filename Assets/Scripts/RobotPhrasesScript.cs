@@ -7,18 +7,26 @@ public class RobotPhrasesScript : MonoBehaviour
 {
     [SerializeField] StoreHumor allPhrases;
     TMP_Text text;
-    SpriteRenderer renderer;
+    SpriteRenderer render;
+
+    private void Start()
+    {
+        render = GetComponent<SpriteRenderer>();
+        text = GetComponentInChildren<TMP_Text>();
+        render.enabled = false;
+        text.gameObject.SetActive(false);
+    }
     public void SetActive(bool active)
     {
         if (active)
         {
-            renderer.enabled = true;
+            render.enabled = true;
             text.gameObject.SetActive(true);
             UpdateText();
         }
         else
         {
-            renderer.enabled = false;
+            render.enabled = false;
             text.gameObject.SetActive(false);
         }
     }
