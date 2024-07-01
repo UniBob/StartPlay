@@ -53,6 +53,7 @@ public class GardenHelperRobot : MonoBehaviour
             }
 
             Debug.Log("Урожай собран");
+            inventoryManager.AddItem(5, 1, ObjectTypes.plant);
             isGrowingFruitsReceived = true;
 
 
@@ -67,10 +68,10 @@ public class GardenHelperRobot : MonoBehaviour
         //add atarted seeds
         if (isPlayerNearby && Input.GetKeyDown(KeyCode.E))
         {
-            inventoryManager.AddItem(0, 1, ObjectTypes.seed);
+            inventoryManager.AddItem(0, 2, ObjectTypes.seed);
             inventoryManager.AddItem(1, 2, ObjectTypes.seed);
             inventoryManager.AddItem(2, 1, ObjectTypes.seed);
-            inventoryManager.AddItem(3, 2, ObjectTypes.seed);
+            inventoryManager.AddItem(3, 1, ObjectTypes.seed);
             inventoryManager.AddItem(4, 4, ObjectTypes.plant);
         }
     }

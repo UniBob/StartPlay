@@ -16,4 +16,4 @@ MonoBehaviour:
   objectName: "\u0421\u0435\u043C\u0435\u043D\u0430 \u043A\u0430\u0440\u0442\u043E\u0444\u0435\u043B\u044F"
   description: 
   cost: 3
-  sprite: {fileID: 21300000, guid: 71373d67372d9c346b28446fa6629f4d, type: 2}
+  sprite: {fileID: 21300000, guid: ae1c62435799cc846bbec2e6686d91c2, type: 3}
