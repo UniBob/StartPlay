@@ -7,7 +7,7 @@ public class TextOutputController : MonoBehaviour
     [SerializeField] TMP_Text textBox;
     [SerializeField] float textOutputDelay;
     [SerializeField] TextScript[] textData;
-
+    [SerializeField] bool isDeathScreen;
     int textDataIterator;
     int currentWritingLetter;
     string currentWritingText;
@@ -16,15 +16,22 @@ public class TextOutputController : MonoBehaviour
 
     void Start()
     {
-        Player.Save += SaveTextProgress;
-        if (PlayerPrefs.HasKey(PrefsKeys.textDataPage))
+        if (isDeathScreen)
         {
-            textDataIterator = PlayerPrefs.GetInt(PrefsKeys.textDataPage);
+            textDataIterator = 0;
         }
         else
         {
-            textDataIterator = 0;
-            PlayerPrefs.SetInt(PrefsKeys.textDataPage, textDataIterator);
+            Player.Save += SaveTextProgress;
+            if (PlayerPrefs.HasKey(PrefsKeys.textDataPage))
+            {
+                textDataIterator = PlayerPrefs.GetInt(PrefsKeys.textDataPage);
+            }
+            else
+            {
+                textDataIterator = 0;
+                PlayerPrefs.SetInt(PrefsKeys.textDataPage, textDataIterator);
+            }            
         }
         textBox.text = "";
         currentWritingText = textData[textDataIterator].textboxText;
@@ -53,7 +60,12 @@ public class TextOutputController : MonoBehaviour
                     if (textData[textDataIterator].isEndOfDialogie)
                     {
                         textDataIterator++;
+                        if (!isDeathScreen)
+                        {
+                            SaveTextProgress();
+                        }
                         SceneManager.LoadScene(PrefsKeys.gardenSceneTag);
+                        
                     }
                     textBox.text = "";
                     currentWritingText = textData[++textDataIterator].textboxText;

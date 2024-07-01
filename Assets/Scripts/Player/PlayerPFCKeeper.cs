@@ -37,13 +37,13 @@ public class PlayerPFCKeeper : MonoBehaviour
         float percentageOfProteinNormClosure = expectedPFC.x / playerCurrentPFC.x;
         if (percentageOfProteinNormClosure < 0.5f)
         {
-            AddToParametr(PrefsKeys.bulletDamageKey, -1);
+            AddToParametr(PrefsKeys.bulletDamageKey, -5f);
         }
         else
         {
             if (percentageOfProteinNormClosure > 1f)
             {
-                AddToParametr(PrefsKeys.bulletDamageKey, 1);
+                AddToParametr(PrefsKeys.bulletDamageKey, 5f);
             }
         }
 

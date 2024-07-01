@@ -45,34 +45,36 @@ public class GardenHelperRobot : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerNearby && Input.GetKeyDown(KeyCode.E) && !isGrowingFruitsReceived)
-        {
-            foreach (int fruit in growingFruits)
-            {
-                inventoryManager.AddItem(fruit, 3, ObjectTypes.plant);
-            }
-
-            Debug.Log("Урожай собран");
-            inventoryManager.AddItem(5, 1, ObjectTypes.plant);
-            isGrowingFruitsReceived = true;
-
-
-        }
-
-        if (isPlayerNearby && Input.GetKeyDown(KeyCode.E) && !isPhraseActive)
-        {
-            robotPhrases.ActivatePhrase(true);
-            isPhraseActive = true;
-        }
-
-        //add atarted seeds
         if (isPlayerNearby && Input.GetKeyDown(KeyCode.E))
         {
-            inventoryManager.AddItem(0, 2, ObjectTypes.seed);
-            inventoryManager.AddItem(1, 2, ObjectTypes.seed);
-            inventoryManager.AddItem(2, 1, ObjectTypes.seed);
-            inventoryManager.AddItem(3, 1, ObjectTypes.seed);
-            inventoryManager.AddItem(4, 4, ObjectTypes.plant);
+            if (!isGrowingFruitsReceived)
+            {
+                foreach (int fruit in growingFruits)
+                {
+                    if (fruit > 0) inventoryManager.AddItem(fruit, 3, ObjectTypes.plant);
+                }
+
+                Debug.Log("Урожай собран");
+                inventoryManager.AddItem(5, 1, ObjectTypes.plant);
+                isGrowingFruitsReceived = true;
+            }
+
+            if (!isPhraseActive)
+            {
+                buttonIcon.SetActive(false);
+                robotPhrases.ActivatePhrase(true);
+                isPhraseActive = true;
+            }
+
+            if (!PlayerPrefs.HasKey(PrefsKeys.firstPakageArrived))
+            {
+                PlayerPrefs.SetInt(PrefsKeys.firstPakageArrived, 0);
+                inventoryManager.AddItem(0, 2, ObjectTypes.seed);
+                inventoryManager.AddItem(1, 2, ObjectTypes.seed);
+                inventoryManager.AddItem(2, 1, ObjectTypes.seed);
+                inventoryManager.AddItem(3, 1, ObjectTypes.seed);
+                inventoryManager.AddItem(4, 4, ObjectTypes.plant);
+            }
         }
     }
 }

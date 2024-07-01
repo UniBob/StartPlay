@@ -14,11 +14,13 @@ public static class PrefsKeys
     public static string enemyesOnStage = "enemyesOnStage";
     public static string textDataPage = "textDataPage";
     public static string playerMovementSpeed = "playerMovementSpeed";
+    public static string firstPakageArrived = "firstPakage";
 
+    public static int startPageTag = 0;
     public static int gardenSceneTag = 1;
     public static int fightSceneTag = 2;
-    public static int startPageTag = 0;
     public static int dialogueSceneTag = 3;
+    public static int deathSceneTag = 4;
 
     public static void ResetData()
     {

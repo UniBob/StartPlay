@@ -35,6 +35,7 @@ public class StartSceneManager : MonoBehaviour
         }
         else
         {
+            PrefsKeys.ResetData();
             SceneManager.LoadScene(PrefsKeys.dialogueSceneTag);
         }
     }

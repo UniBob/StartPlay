@@ -131,6 +131,7 @@ public class Player : MonoBehaviour
     void Death()
     {
         isAlive = false;
+        SceneManager.LoadScene(PrefsKeys.deathSceneTag);
        // anim.SetBool("isAlive", false);
     }
 

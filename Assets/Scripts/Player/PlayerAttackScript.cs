@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAttackScript : MonoBehaviour
@@ -15,7 +13,7 @@ public class PlayerAttackScript : MonoBehaviour
         }
         else
         {
-            damage = 10;
+            damage = 20;
             PlayerPrefs.SetFloat(PrefsKeys.bulletDamageKey, damage);
         }
         Player.Save += SaveDamage;

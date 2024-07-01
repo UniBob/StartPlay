@@ -4,6 +4,7 @@ using UnityEngine;
 public class RobotPhrasesScript : MonoBehaviour
 {
     [SerializeField] StoreHumor allPhrases;
+    [SerializeField] string startPhrase;
     TMP_Text text;
     SpriteRenderer render;
 
@@ -20,6 +21,10 @@ public class RobotPhrasesScript : MonoBehaviour
         {
             render.enabled = true;
             text.gameObject.SetActive(true);
+            if (!PlayerPrefs.HasKey(PrefsKeys.firstPakageArrived))
+            {
+                text.text = startPhrase;
+            }            
             UpdateText();
         }
         else

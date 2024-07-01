@@ -32,7 +32,7 @@ public class InventoryManager : MonoBehaviour
                 slots.Add(inventorySlot);
             }
         }
-
+        slotsForSave = new Vector3Int[slots.Count];
         AddLoadedItemToInventory();
     }
 
@@ -57,7 +57,10 @@ public class InventoryManager : MonoBehaviour
         {
             return;
         }
-
+        if (_item == 60000)
+        {
+            return;
+        }
         //Debug.Log("_item: " + _item + ", _amount: " + _amount + ", _type: " + _type);
         foreach (InventorySlot slot in slots)
         {
@@ -70,11 +73,11 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        //Debug.Log("Нету схожих в инвентаре");
+        Debug.Log("Нету схожих в инвентаре");
 
         foreach (InventorySlot slot in slots)
         {
-            //Debug.Log("slot.itemId: " + slot.itemId + ", slot.type: " + slot.type);
+            Debug.Log("slot.itemId: " + slot.itemId + ", slot.type: " + slot.type);
             if (slot.isEmpty)
             {
                 //Debug.Log("пустой слот");
@@ -104,6 +107,7 @@ public class InventoryManager : MonoBehaviour
             if (!slot.isEmpty)
             {
                 Debug.Log(slot.itemId + "  " + slot.amount);
+                Debug.Log(slotsForSave.Length);
                 slotsForSave[index] = new Vector3Int(slot.itemId, slot.amount, (int)slot.type);
                 index++;
             }

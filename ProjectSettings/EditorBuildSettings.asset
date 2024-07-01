@@ -16,5 +16,8 @@ EditorBuildSettings:
     guid: a4a0277a3e952c04da28213a69c8f160
   - enabled: 1
     path: Assets/Scenes/DialogueScene.unity
+    guid: 0573eda2a5eec64438e30afa5c730b6d
+  - enabled: 1
+    path: Assets/Scenes/DeathScene.unity
     guid: 4602cc4af781e55458f1266be702382c
   m_configObjects: {}
