@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Cinemachine.CinemachineFreeLook;
 
 public class GardenHelperRobot : MonoBehaviour
 {
@@ -61,6 +62,16 @@ public class GardenHelperRobot : MonoBehaviour
         {
             robotPhrases.ActivatePhrase(true);
             isPhraseActive = true;
+        }
+
+        //add atarted seeds
+        if (isPlayerNearby && Input.GetKeyDown(KeyCode.E))
+        {
+            inventoryManager.AddItem(0, 1, ObjectTypes.seed);
+            inventoryManager.AddItem(1, 2, ObjectTypes.seed);
+            inventoryManager.AddItem(2, 1, ObjectTypes.seed);
+            inventoryManager.AddItem(3, 2, ObjectTypes.seed);
+            inventoryManager.AddItem(4, 4, ObjectTypes.plant);
         }
     }
 }

@@ -26036,6 +26036,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ffdb9b4da7d25944c97ceaf0871804f8, type: 2}
   - {fileID: 11400000, guid: e93cebfc8229d3945979a33dd9b17d03, type: 2}
   - {fileID: 11400000, guid: 6614b12cca571d1429351f00fbc0c04e, type: 2}
+  - {fileID: 11400000, guid: ab0fe351aa4a3054d8623bc21540ca84, type: 2}
 --- !u!114 &884045366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27049,9 +27050,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.080468036}
+  m_Offset: {x: 0, y: -0.1394807}
   serializedVersion: 2
-  m_Radius: 0.72046834
+  m_Radius: 1.1335585
 --- !u!224 &1049386256 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2520880307467387869, guid: 27e4613a2e4fa2747af69239bdcd45e2, type: 3}
