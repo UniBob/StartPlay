@@ -8,6 +8,7 @@ public class TextOutputController : MonoBehaviour
     [SerializeField] float textOutputDelay;
     [SerializeField] TextScript[] textData;
     [SerializeField] bool isDeathScreen;
+    [SerializeField] AudioSource audio;
     int textDataIterator;
     int currentWritingLetter;
     string currentWritingText;
@@ -16,6 +17,11 @@ public class TextOutputController : MonoBehaviour
 
     void Start()
     {
+        audio = FindObjectOfType<AudioSource>();
+        if (PlayerPrefs.HasKey(PrefsKeys.volumeLvl))
+        {
+            audio.volume = PlayerPrefs.GetFloat(PrefsKeys.volumeLvl);
+        }
         if (isDeathScreen)
         {
             textDataIterator = 0;

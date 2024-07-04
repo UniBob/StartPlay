@@ -15,6 +15,7 @@ public static class PrefsKeys
     public static string textDataPage = "textDataPage";
     public static string playerMovementSpeed = "playerMovementSpeed";
     public static string firstPakageArrived = "firstPakage";
+    public static string volumeLvl = "volumeLvl";
 
     public static int startPageTag = 0;
     public static int gardenSceneTag = 1;

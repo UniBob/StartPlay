@@ -13,9 +13,20 @@ public class StartSceneManager : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] GameObject aproveWindow;
+    [SerializeField] AudioSource audio;
 
     void Start()
     {
+        audio = FindObjectOfType<AudioSource>();
+        if (PlayerPrefs.HasKey(PrefsKeys.volumeLvl))
+        {
+            audio.volume = PlayerPrefs.GetFloat(PrefsKeys.volumeLvl);
+        }
+        else
+        {
+            audio.volume = 1.0f;
+            PlayerPrefs.SetFloat(PrefsKeys.volumeLvl,audio.volume);
+        }
         aproveWindow.SetActive(false);
         if (PlayerPrefs.HasKey(PrefsKeys.stage))
         {
@@ -36,6 +47,7 @@ public class StartSceneManager : MonoBehaviour
         else
         {
             PrefsKeys.ResetData();
+
             SceneManager.LoadScene(PrefsKeys.dialogueSceneTag);
         }
     }
