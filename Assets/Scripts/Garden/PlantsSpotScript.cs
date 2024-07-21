@@ -14,7 +14,6 @@ public class PlantsSpotScript : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Awake");
         spriteRenderer = GetComponent<SpriteRenderer>();
         keeper = FindObjectOfType<GardenKeeperScript>();
         buttonIcon.SetActive(false);
@@ -22,7 +21,6 @@ public class PlantsSpotScript : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Start");
     }
 
     void Update()

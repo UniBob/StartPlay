@@ -80,7 +80,6 @@ public class InventoryManager : MonoBehaviour
             Debug.Log("slot.itemId: " + slot.itemId + ", slot.type: " + slot.type);
             if (slot.isEmpty)
             {
-                //Debug.Log("пустой слот");
                 slot.itemId = _item;
                 slot.amount = _amount;
                 slot.type = _type;

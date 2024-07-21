@@ -26,53 +26,18 @@ public class GardenKeeperScript : MonoBehaviour
     private void Start()
     {
         Player.Save += SaveSpotsStatus;
-        //LoadArray(PrefsKeys.plantedKey);
         LoadArray2(PrefsKeys.plantedKey2);
-        /*
-        if (PlayerPrefs.HasKey(PrefsKeys.clearLocationKey))
-        {
-            int goldMultiplier = PlayerPrefs.GetInt(PrefsKeys.clearLocationKey);
-            if (goldMultiplier > 1)
-            {                
-                PlayerPrefs.SetInt(PrefsKeys.clearLocationKey, 0);
-                int goldIncome = 0;
-                for (int i = 0; i < whichPlantIsPlantedInTheSpot.Length; i++)
-                {                    
-                    if (whichPlantIsPlantedInTheSpot[i] != Plants.Nothing)
-                    {
-                        goldIncome += plantsPrices[(int)whichPlantIsPlantedInTheSpot[i]];
-                    }
-                    plantsSpots[i].SetSprite(plantsSprites[(int)Plants.Nothing], true);
-                }
-                goldKeeper.IncreeseGoldAmount((int)(goldIncome*(goldMultiplier/40)));
-            }
-            else
-            {
-                for (int i = 0; i < whichPlantIsPlantedInTheSpot.Length; i++)
-                {
-                    plantsSpots[i].SetSprite(plantsSprites[(int)whichPlantIsPlantedInTheSpot[i]], whichPlantIsPlantedInTheSpot[i] == Plants.Nothing);
-                  
-                }
-            }
-        }
-        else
-        {
-            PlayerPrefs.SetInt(PrefsKeys.clearLocationKey, 0);
-            for (int i = 0; i < whichPlantIsPlantedInTheSpot.Length; i++)
-            {
-                plantsSpots[i].SetSprite(plantsSprites[(int)whichPlantIsPlantedInTheSpot[i]], whichPlantIsPlantedInTheSpot[i] == Plants.Nothing);
-            
-            }
-        }
-        */
+        
         plantsKeeper = FindObjectOfType<PlantsKeeper>();
 
-        if (PlayerPrefs.HasKey(PrefsKeys.clearLocationKey))
+        if (true)
         {
             for (int i = 0; i < whichPlantIsPlantedInTheSpot2.Length; i++)
             {
+                Debug.Log("whichPlantIsPlantedInTheSpot2");
                 if (whichPlantIsPlantedInTheSpot2[i] != -1)
                 {
+                    Debug.Log("palnt plant");
                     plantsSpots[i].SetSprite(plantsKeeper.allPlants[whichPlantIsPlantedInTheSpot2[i]].sprite, whichPlantIsPlantedInTheSpot2[i] == -1);
                 }
                 else
@@ -85,9 +50,7 @@ public class GardenKeeperScript : MonoBehaviour
 
     public void SaveSpotsStatus()
     {
-        //string json = JsonUtility.ToJson(new Serialization<Plants>(whichPlantIsPlantedInTheSpot));
         string json2 = JsonUtility.ToJson(new Serialization<int>(whichPlantIsPlantedInTheSpot2));
-        //PlayerPrefs.SetString(PrefsKeys.plantedKey, json);
         PlayerPrefs.SetString(PrefsKeys.plantedKey2, json2);
         PlayerPrefs.Save();
     }
@@ -109,15 +72,6 @@ public class GardenKeeperScript : MonoBehaviour
         }
     }
 
-
-    /*void LoadArray(string key)
-    {
-        if (PlayerPrefs.HasKey(key))
-        {
-            string json = PlayerPrefs.GetString(key);
-            whichPlantIsPlantedInTheSpot = JsonUtility.FromJson<Serialization<Plants>>(json).ToArray();
-        }
-    }*/
     void LoadArray2(string key)
     {
         if (PlayerPrefs.HasKey(key))
@@ -132,20 +86,11 @@ public class GardenKeeperScript : MonoBehaviour
         whichPlantIsPlantedInTheSpot2[actualPlantSpot] = plantId;
 
         plantsSpots[actualPlantSpot].SetSprite(plantsKeeper.allPlants[plantId].sprite, false);
-
-        /*
-        whichPlantIsPlantedInTheSpot[actualPlantSpot] = (Plants)plant;
-        Debug.Log("plantsSpots[actualPlantSpot]: " + plantsSpots[actualPlantSpot]);
-        Debug.Log("plantsSprites[plant]: " + plantsSprites[plant]);
-        plantsSpots[actualPlantSpot].SetSprite(plantsSprites[plant], false);
-        ChoosePlantingPlantPanel.SetActive(false);
-        */
     }
 
     public void SetActualPlantsSpots(int actualSpot)
     {
         actualPlantSpot = actualSpot;
-        //ChoosePlantingPlantPanel.SetActive(true);
         InventoryManager inventoryManager = FindObjectOfType<InventoryManager>();
         inventoryManager.OpenInventory();
         inventoryManager.isOpenForPlanting = true;
