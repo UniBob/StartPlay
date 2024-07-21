@@ -18,7 +18,7 @@ public class GardenKeeperScript : MonoBehaviour
     [SerializeField] GoldKeeperScript goldKeeper;
     [SerializeField] GameObject ChoosePlantingPlantPanel;
 
-    [SerializeField] public int[] whichPlantIsPlantedInTheSpot2;
+    [SerializeField] public int[] whichPlantIsPlantedInTheSpot;
     [SerializeField] PlantsKeeper plantsKeeper;
 
     private int actualPlantSpot;
@@ -26,19 +26,17 @@ public class GardenKeeperScript : MonoBehaviour
     private void Start()
     {
         Player.Save += SaveSpotsStatus;
-        LoadArray2(PrefsKeys.plantedKey2);
+        LoadArray(PrefsKeys.plantedKey2);
         
         plantsKeeper = FindObjectOfType<PlantsKeeper>();
 
-        if (true)
+        if (PlayerPrefs.HasKey(PrefsKeys.clearLocationKey))
         {
-            for (int i = 0; i < whichPlantIsPlantedInTheSpot2.Length; i++)
+            for (int i = 0; i < whichPlantIsPlantedInTheSpot.Length; i++)
             {
-                Debug.Log("whichPlantIsPlantedInTheSpot2");
-                if (whichPlantIsPlantedInTheSpot2[i] != -1)
+                if (whichPlantIsPlantedInTheSpot[i] != -1)
                 {
-                    Debug.Log("palnt plant");
-                    plantsSpots[i].SetSprite(plantsKeeper.allPlants[whichPlantIsPlantedInTheSpot2[i]].sprite, whichPlantIsPlantedInTheSpot2[i] == -1);
+                    plantsSpots[i].SetSprite(plantsKeeper.allPlants[whichPlantIsPlantedInTheSpot[i]].sprite, whichPlantIsPlantedInTheSpot[i] == -1);
                 }
                 else
                 {
@@ -50,7 +48,7 @@ public class GardenKeeperScript : MonoBehaviour
 
     public void SaveSpotsStatus()
     {
-        string json2 = JsonUtility.ToJson(new Serialization<int>(whichPlantIsPlantedInTheSpot2));
+        string json2 = JsonUtility.ToJson(new Serialization<int>(whichPlantIsPlantedInTheSpot));
         PlayerPrefs.SetString(PrefsKeys.plantedKey2, json2);
         PlayerPrefs.Save();
     }
@@ -72,18 +70,18 @@ public class GardenKeeperScript : MonoBehaviour
         }
     }
 
-    void LoadArray2(string key)
+    void LoadArray(string key)
     {
         if (PlayerPrefs.HasKey(key))
         {
             string json = PlayerPrefs.GetString(key);
-            whichPlantIsPlantedInTheSpot2 = JsonUtility.FromJson<Serialization<int>>(json).ToArray();
+            whichPlantIsPlantedInTheSpot = JsonUtility.FromJson<Serialization<int>>(json).ToArray();
         }
     }
 
     public void PlantIsPlanted(int plantId)
     {
-        whichPlantIsPlantedInTheSpot2[actualPlantSpot] = plantId;
+        whichPlantIsPlantedInTheSpot[actualPlantSpot] = plantId;
 
         plantsSpots[actualPlantSpot].SetSprite(plantsKeeper.allPlants[plantId].sprite, false);
     }

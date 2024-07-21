@@ -18,7 +18,7 @@ public class GardenHelperRobot : MonoBehaviour
         inventoryManager = FindObjectOfType<InventoryManager>();
         robotPhrases = FindObjectOfType<RobotPhrasesScript>();
 
-        growingFruits = gardenKeeper.whichPlantIsPlantedInTheSpot2;
+        growingFruits = gardenKeeper.whichPlantIsPlantedInTheSpot;
         isGrowingFruitsReceived = false;
         isPhraseActive = false;
     }
