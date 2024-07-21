@@ -13,7 +13,6 @@ public class GardenKeeperScript : MonoBehaviour
        
     [SerializeField] PlantsSpotScript[] plantsSpots;
     [SerializeField] Sprite[] plantsSprites;
-    //[SerializeField] Plants[] whichPlantIsPlantedInTheSpot;
     [SerializeField] int[] plantsPrices;
     [SerializeField] GoldKeeperScript goldKeeper;
     [SerializeField] GameObject ChoosePlantingPlantPanel;
@@ -29,19 +28,15 @@ public class GardenKeeperScript : MonoBehaviour
         LoadArray(PrefsKeys.plantedKey2);
         
         plantsKeeper = FindObjectOfType<PlantsKeeper>();
-
-        if (PlayerPrefs.HasKey(PrefsKeys.clearLocationKey))
+        for (int i = 0; i < whichPlantIsPlantedInTheSpot.Length; i++)
         {
-            for (int i = 0; i < whichPlantIsPlantedInTheSpot.Length; i++)
+            if (whichPlantIsPlantedInTheSpot[i] != -1)
             {
-                if (whichPlantIsPlantedInTheSpot[i] != -1)
-                {
-                    plantsSpots[i].SetSprite(plantsKeeper.allPlants[whichPlantIsPlantedInTheSpot[i]].sprite, whichPlantIsPlantedInTheSpot[i] == -1);
-                }
-                else
-                {
-                    plantsSpots[i].SetSprite(plantsSprites[(int)Plants.Nothing], true);
-                }
+                plantsSpots[i].SetSprite(plantsKeeper.allPlants[whichPlantIsPlantedInTheSpot[i]].sprite, whichPlantIsPlantedInTheSpot[i] == -1);
+            }
+            else
+            {
+                plantsSpots[i].SetSprite(plantsSprites[(int)Plants.Nothing], true);
             }
         }
     }
