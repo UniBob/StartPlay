@@ -38,14 +38,17 @@ public class PlayeMovement : MonoBehaviour
 
     private void Rotate()
     {
-        if (Input.GetAxis("Horizontal") < 0)
+        if (!characterAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
-            transform.localScale = Vector3.one;
-        }
-        else
-        {
-            if(Input.GetAxis("Horizontal") > 0)
-            transform.localScale = new Vector3(-1, 1, 1);
+            if (Input.GetAxis("Horizontal") < 0)
+            {
+                transform.localScale = Vector3.one;
+            }
+            else
+            {
+                if (Input.GetAxis("Horizontal") > 0)
+                    transform.localScale = new Vector3(-1, 1, 1);
+            }
         }
     }
     private void Move()

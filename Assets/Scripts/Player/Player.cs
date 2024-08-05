@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
         SyncronizePrayerParams();
         nextShotTime = Time.time;
         if (HPUpdate != null) { HPUpdate(currentHealth); };
-        attackScript = GetComponent<PlayerAttackScript>();
+        attackScript = GetComponentInChildren<PlayerAttackScript>();
         weaponAnim.gameObject.SetActive(false);
         overlayAnim.gameObject.SetActive(false);
         if (SceneManager.GetActiveScene().buildIndex == PrefsKeys.gardenSceneTag)
@@ -99,7 +99,6 @@ public class Player : MonoBehaviour
                 weaponAnim.gameObject.SetActive(true);
                 overlayAnim.gameObject.SetActive(true);
                // attackScript.gameObject.SetActive(true);
-                attackScript.StartAttack();
 
                 nextShotTime = Time.time + fireRate;
 

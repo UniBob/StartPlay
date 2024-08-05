@@ -3,10 +3,13 @@ using UnityEngine;
 public class PlayerAttackScript : MonoBehaviour
 {
     [SerializeField] float damage;
-    [SerializeField] float radius;
-
+    [SerializeField] bool canDealDamage;
+    Collider2D collider;
     private void Start()
     {
+        collider = GetComponent<Collider2D>();
+        collider.enabled = false;
+        canDealDamage = false;
         if (PlayerPrefs.HasKey(PrefsKeys.bulletDamageKey))
         {
             damage = PlayerPrefs.GetFloat(PrefsKeys.bulletDamageKey);
@@ -17,8 +20,9 @@ public class PlayerAttackScript : MonoBehaviour
             PlayerPrefs.SetFloat(PrefsKeys.bulletDamageKey, damage);
         }
         Player.Save += SaveDamage;
-    }
 
+    }
+    
     private void SaveDamage()
     {
         PlayerPrefs.SetFloat(PrefsKeys.bulletDamageKey, damage);
@@ -26,10 +30,17 @@ public class PlayerAttackScript : MonoBehaviour
 
     public void StartAttack()
     {
-        Collider2D[] hittenEnemies = Physics2D.OverlapCircleAll(transform.position, radius, LayerMask.GetMask("Enemy"));
-        foreach (var i in hittenEnemies)
-        {
-            i.GetComponent<Enemy>().GetDamage(damage);
-        }
+        collider.enabled = true;
+    }
+
+    public void EndAttack()
+    {
+        collider.enabled = false;
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        collision.GetComponent<Enemy>().GetDamage(damage);
     }
 }

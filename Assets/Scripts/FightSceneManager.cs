@@ -85,6 +85,7 @@ public class FightSceneManager : MonoBehaviour
         }
     }
 
+
     public void EnemyDeath(int tag)
     {
         enemiesOnScene--;
